@@ -1,6 +1,13 @@
 az login
-az acs create --orchestrator-type kubernetes --resource-group KubernetesCluster --name KubernetesCluster --generate-ssh-keys
-az acs kubernetes get-credentials --resource-group=KubernetesCluster --name=KubernetesCluster
+az provider register -n Microsoft.Network
+az provider register -n Microsoft.Storage
+az provider register -n Microsoft.Compute
+az provider register -n Microsoft.ContainerService
+
+az aks create --resource-group ACSDemo --name ACSDemo --node-count 1 --generate-ssh-keys
+az aks install-cli
+az aks get-credentials --resource-group ACSDemo --name ACSDemo
+
 kubectl get nodes
 kubectl run merodefields --image=geobarteam/merodefields --port=80
 kubectl get deployments
